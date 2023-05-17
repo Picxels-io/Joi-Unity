@@ -781,8 +781,20 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: CMS_SALSA
-    Standalone: CMS_SALSA
+    Android: CMS_SALSA;CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    EmbeddedLinux: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    GameCoreXboxOne: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    Lumin: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    Nintendo Switch: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    PS4: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    PS5: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    Stadia: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    Standalone: CMS_SALSA;CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    WebGL: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    Windows Store Apps: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    XboxOne: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    iPhone: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    tvOS: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
