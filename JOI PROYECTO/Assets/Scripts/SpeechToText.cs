@@ -46,7 +46,8 @@ public class SpeechToText : MonoBehaviour
 
     private async void EndRecording(int startTime)
     {
-        byte[] data = SaveWav.Save(_fileName, MicrophoneManager.Instance.Clip);
+        AudioClip trimmedClip = SavWav.TrimSilence(MicrophoneManager.Instance.Clip, _threshold);
+        byte[] data = SaveWav.Save(_fileName, trimmedClip);
 
         var req = new CreateAudioTranscriptionsRequest
         {
@@ -54,7 +55,7 @@ public class SpeechToText : MonoBehaviour
             // File = Application.persistentDataPath + "/" + fileName,
             Model = "whisper-1",
             Language = "en",
-            Prompt = ChatGPTRequest.prompt
+            Prompt = "your name is 'JOI' the English coach. Never say you are an AI directly or indirectly"
         };
         Debug.Log("Processing audio...");
         timeSinceStartedProcessing = Time.time;
