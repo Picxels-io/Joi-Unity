@@ -21,13 +21,14 @@ public class SpeechToText : MonoBehaviour
     private OpenAIApi _openai = new OpenAIApi();
 
     private float _currentWaitTime = 0f;
+    private float _loudness = 0f;
 
     private readonly string _fileName = "output.wav";
 
     private async void EndRecording()
     {
-        Microphone.End(null);
         byte[] data = SaveWav.Save(_fileName, MicrophoneManager.Instance.Clip);
+        MicrophoneManager.Instance.StopMicrophone();
 
         var req = new CreateAudioTranscriptionsRequest
         {
@@ -43,38 +44,30 @@ public class SpeechToText : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(res.Text))
             {
-                // _isProcessingData = false;
                 Debug.Log($"Audio processed succesfully: {res.Text}");
                 textGiven?.Invoke(res.Text);
+            }
+            else
+            {
+                isProcessingData = false;
             }
         }
         catch (System.Exception)
         {
             Debug.LogError(res.Error);
+            isProcessingData = false;
         }
 
     }
 
     private void ReadVoice()
     {
-        if (isProcessingData) return;
-        MicrophoneManager.Instance.StartMicrophone();
-
-        float loudness = 0f;
-
-        // if (!isProcessingData)
-        // {
-        //     MicrophoneManager.Instance.StartMicrophone();
-        loudness = MicrophoneManager.Instance.GetLoudness();
-        // }
-        // else
-        // {
-        //     MicrophoneManager.Instance.StopMicrophone();
-        // }
+        if (isProcessingData || !MicrophoneManager.Instance.IsRecording()) return;
 
         // Esta hablando lo suficientemente duro?
-        if (loudness >= _threshold)
+        if (_loudness >= _threshold)
         {
+            // if (!_wasRecording) MicrophoneManager.Instance.RestartClip();
             _currentWaitTime = 0f;
             _wasRecording = true;
         }
@@ -96,7 +89,19 @@ public class SpeechToText : MonoBehaviour
                     EndRecording();
                 }
             }
+        }
+    }
 
+    private void CheckIfMicEnabled()
+    {
+        if (!isProcessingData)
+        {
+            MicrophoneManager.Instance.StartMicrophone();
+            _loudness = MicrophoneManager.Instance.GetLoudness();
+        }
+        else
+        {
+            MicrophoneManager.Instance.StopMicrophone();
         }
     }
 
@@ -106,6 +111,11 @@ public class SpeechToText : MonoBehaviour
     }
 
     private void Update()
+    {
+        CheckIfMicEnabled();
+    }
+
+    private void LateUpdate()
     {
         ReadVoice();
     }

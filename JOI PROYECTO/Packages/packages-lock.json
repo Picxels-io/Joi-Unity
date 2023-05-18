@@ -9,12 +9,13 @@
       }
     },
     "com.srcnalt.openai-unity": {
-      "version": "file:C:/Users/marel/Downloads/OpenAI-Unity-0.1.13/OpenAI-Unity-0.1.13",
+      "version": "https://github.com/srcnalt/OpenAI-Unity.git",
       "depth": 0,
-      "source": "local",
+      "source": "git",
       "dependencies": {
         "com.unity.nuget.newtonsoft-json": "3.2.1"
-      }
+      },
+      "hash": "3a6db611f3cfdf754edee635c66cf95dd6deb62e"
     },
     "com.unity.burst": {
       "version": "1.8.4",

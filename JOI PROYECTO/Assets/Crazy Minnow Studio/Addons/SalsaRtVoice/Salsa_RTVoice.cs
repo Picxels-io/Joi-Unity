@@ -13,12 +13,21 @@ namespace CrazyMinnow.SALSA.RTVoice
         public string speakText = "This is a test using SALSA with RT-Voice"; // Text to pass to Speak
         public bool speak; // Inspector button to fire the speak event
 
+        private bool _isSpeaking = false;
+
+        private void SpeakCompleted(Crosstales.RTVoice.Model.Wrapper wrapper)
+        {
+            SpeechToText.Instance.isProcessingData = false;
+            Debug.Log("Mic is enabled");
+        }
+
         /// <summary>
         /// Get the AudioSource component used by SALSA
         /// </summary>
         void Awake()
         {
             if (!audioSrc) audioSrc = GetComponent<AudioSource>();
+            Speaker.Instance.OnSpeakComplete += SpeakCompleted;
         }
 
         /// <summary>
@@ -28,9 +37,12 @@ namespace CrazyMinnow.SALSA.RTVoice
         /// </summary>
         void LateUpdate()
         {
+            Debug.Log(Speaker.Instance.isSpeaking);
+
             if (speak)
             {
                 speak = false;
+                _isSpeaking = true;
                 Speaker.Instance.Speak(speakText, audioSrc, Speaker.Instance.VoicesForCulture("en")[0]);
             }
         }
