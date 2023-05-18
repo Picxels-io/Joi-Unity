@@ -30,6 +30,11 @@ namespace CrazyMinnow.SALSA.RTVoice
             Speaker.Instance.OnSpeakComplete += SpeakCompleted;
         }
 
+        private void OnDisable()
+        {
+            Speaker.Instance.OnSpeakComplete -= SpeakCompleted;
+        }
+
         /// <summary>
         /// This is only used for testing and can be deleted in an implementation where you
         /// make your own call's to [Speaker.Speak]. Click [Speak] in this inspector
@@ -37,7 +42,7 @@ namespace CrazyMinnow.SALSA.RTVoice
         /// </summary>
         void LateUpdate()
         {
-            Debug.Log(Speaker.Instance.isSpeaking);
+            // Debug.Log(Speaker.Instance.isSpeaking);
 
             if (speak)
             {

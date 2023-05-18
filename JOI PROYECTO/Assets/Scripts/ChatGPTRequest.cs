@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class ChatGPTRequest : MonoBehaviour
 {
+    public static ChatGPTRequest Instance;
+
     [SerializeField] private int maxHistoryStorage = 30;
 
     private Salsa_RTVoice _rtVoice;
@@ -15,7 +17,7 @@ public class ChatGPTRequest : MonoBehaviour
     private List<ChatMessage> messages = new List<ChatMessage>();
     private OpenAIApi openai = new OpenAIApi();
 
-    private const string prompt = "Your name is JOI, You are an english coach and that's it, you don't know anything else. Don't say you are an AI, just try to act as a human english coach";
+    public const string prompt = "Your name is JOI, You are an english coach and that's it, you don't know anything else. Don't say you are an AI, just try to act as a human english coach";
 
     private void SendRequest(string newText)
     {
@@ -53,6 +55,9 @@ public class ChatGPTRequest : MonoBehaviour
         else
         {
             Debug.LogWarning("No text was generated from this prompt.");
+            SendToTTS("Sorry, i didn't get the message, can you repeat it for me?");
+            SpeechToText.Instance.isProcessingData = false;
+            Debug.Log("Mic is enabled");
         }
     }
 
@@ -60,6 +65,11 @@ public class ChatGPTRequest : MonoBehaviour
     {
         _rtVoice.speakText = txt;
         _rtVoice.speak = true;
+    }
+
+    private void Awake()
+    {
+        Instance = this;
     }
 
     private void Start()
