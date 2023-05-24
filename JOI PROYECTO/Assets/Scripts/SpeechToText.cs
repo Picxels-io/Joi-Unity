@@ -11,7 +11,6 @@ public class SpeechToText : MonoBehaviour
 
     public event Action<string> textGiven;
 
-
     [SerializeField] private float _threshold = 0.01f;
     [SerializeField] private float _waitTime = 2f;
     [HideInInspector] public bool isProcessingData = false;
@@ -21,60 +20,77 @@ public class SpeechToText : MonoBehaviour
     private OpenAIApi _openai = new OpenAIApi();
 
     private float _currentWaitTime = 0f;
+    private float _loudness = 0f;
+    private int _recordStartSample = 0;
+
+    // Testing only
+    private float timeSinceStartedProcessing = 0f;
 
     private readonly string _fileName = "output.wav";
 
-    private async void EndRecording()
+    // private void TrimClip(AudioClip clip, int start)
+    // {
+    //     int clipSamples = clip.samples;
+    //     float[] data = new float[clipSamples];
+
+    //     MicrophoneManager.Instance.StopMicrophone();
+    //     clip.GetData(data, 0);
+
+    //     float[] newData = new float[clipSamples - start];
+    //     Debug.Log("Start copying");
+    //     Array.Copy(data, start, newData, 0, clip.samples - start);
+    //     Debug.Log("Copied");
+
+    //     clip.SetData(newData, 0);
+    // }
+
+    private async void EndRecording(int startTime)
     {
-        Microphone.End(null);
-        byte[] data = SaveWav.Save(_fileName, MicrophoneManager.Instance.Clip);
+        AudioClip trimmedClip = SavWav.TrimSilence(MicrophoneManager.Instance.Clip, _threshold);
+        byte[] data = SaveWav.Save(_fileName, trimmedClip);
 
         var req = new CreateAudioTranscriptionsRequest
         {
             FileData = new FileData() { Data = data, Name = "audio.wav" },
             // File = Application.persistentDataPath + "/" + fileName,
             Model = "whisper-1",
-            Language = "en"
+            Language = "en",
+            Prompt = "your name is 'JOI' the English coach. Never say you are an AI directly or indirectly"
         };
         Debug.Log("Processing audio...");
+        timeSinceStartedProcessing = Time.time;
         var res = await _openai.CreateAudioTranscription(req);
 
         try
         {
             if (!string.IsNullOrEmpty(res.Text))
             {
-                // _isProcessingData = false;
-                Debug.Log($"Audio processed succesfully: {res.Text}");
+                Debug.Log($"Audio processed succesfully: {res.Text} : {Time.time - timeSinceStartedProcessing }");
                 textGiven?.Invoke(res.Text);
+            }
+            else
+            {
+                isProcessingData = false;
             }
         }
         catch (System.Exception)
         {
             Debug.LogError(res.Error);
+            isProcessingData = false;
         }
 
     }
 
     private void ReadVoice()
     {
-        if (isProcessingData) return;
-        MicrophoneManager.Instance.StartMicrophone();
+        if (isProcessingData || !MicrophoneManager.Instance.IsRecording()) return;
 
-        float loudness = 0f;
-
-        // if (!isProcessingData)
-        // {
-        //     MicrophoneManager.Instance.StartMicrophone();
-        loudness = MicrophoneManager.Instance.GetLoudness();
-        // }
-        // else
-        // {
-        //     MicrophoneManager.Instance.StopMicrophone();
-        // }
+        int start = _recordStartSample;
 
         // Esta hablando lo suficientemente duro?
-        if (loudness >= _threshold)
+        if (_loudness >= _threshold)
         {
+            // if (!_wasRecording) MicrophoneManager.Instance.RestartClip();
             _currentWaitTime = 0f;
             _wasRecording = true;
         }
@@ -93,10 +109,22 @@ public class SpeechToText : MonoBehaviour
                 {
                     isProcessingData = true;
                     _wasRecording = false;
-                    EndRecording();
+                    EndRecording(start);
                 }
             }
+        }
+    }
 
+    private void CheckIfMicEnabled()
+    {
+        if (!isProcessingData)
+        {
+            MicrophoneManager.Instance.StartMicrophone();
+            _loudness = MicrophoneManager.Instance.GetLoudness();
+        }
+        else
+        {
+            MicrophoneManager.Instance.StopMicrophone();
         }
     }
 
@@ -106,6 +134,11 @@ public class SpeechToText : MonoBehaviour
     }
 
     private void Update()
+    {
+        CheckIfMicEnabled();
+    }
+
+    private void LateUpdate()
     {
         ReadVoice();
     }

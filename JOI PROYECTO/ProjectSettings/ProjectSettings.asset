@@ -8,7 +8,7 @@ PlayerSettings:
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
-  defaultScreenOrientation: 4
+  defaultScreenOrientation: 0
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
@@ -247,7 +247,7 @@ PlayerSettings:
   useCustomBaseGradleTemplate: 0
   useCustomGradlePropertiesTemplate: 0
   useCustomProguardFile: 0
-  AndroidTargetArchitectures: 1
+  AndroidTargetArchitectures: 3
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
@@ -781,11 +781,24 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: CMS_SALSA
-    Standalone: CMS_SALSA
+    Android: CMS_SALSA;CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    EmbeddedLinux: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    GameCoreXboxOne: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    Lumin: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    Nintendo Switch: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    PS4: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    PS5: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    Stadia: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    Standalone: CMS_SALSA;CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    WebGL: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    Windows Store Apps: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    XboxOne: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    iPhone: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
+    tvOS: CT_RTV;CT_PROC;CT_RTV_DEMO;CT_UI
   additionalCompilerArguments: {}
   platformArchitecture: {}
-  scriptingBackend: {}
+  scriptingBackend:
+    Android: 1
   il2cppCompilerConfiguration: {}
   managedStrippingLevel:
     EmbeddedLinux: 1
@@ -806,7 +819,7 @@ PlayerSettings:
   allowUnsafeCode: 0
   useDeterministicCompilation: 1
   enableRoslynAnalyzers: 1
-  selectedPlatform: 0
+  selectedPlatform: 2
   additionalIl2CppArgs: 
   scriptingRuntimeVersion: 1
   gcIncremental: 0

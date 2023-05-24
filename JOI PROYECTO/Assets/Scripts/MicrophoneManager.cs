@@ -45,6 +45,11 @@ public class MicrophoneManager : MonoBehaviour
         return _currentLoudness;
     }
 
+    public bool IsRecording()
+    {
+        return Microphone.IsRecording(_mic);
+    }
+
     public void StartMicrophone()
     {
         if (!Microphone.IsRecording(_mic))
@@ -56,7 +61,16 @@ public class MicrophoneManager : MonoBehaviour
     public void StopMicrophone()
     {
         if (Microphone.IsRecording(_mic))
+        {
             Microphone.End(_mic);
+            _clip = null;
+        }
+    }
+
+    public void RestartClip()
+    {
+        _clip = null;
+        _clip = Microphone.Start(_mic, true, 20, AudioSettings.outputSampleRate);
     }
 
     private void Awake()
