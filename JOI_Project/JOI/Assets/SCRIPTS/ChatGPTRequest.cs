@@ -18,7 +18,7 @@ public class ChatGPTRequest : MonoBehaviour
     private List<ChatMessage> messages = new List<ChatMessage>();
     private OpenAIApi openai = new OpenAIApi("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");
 
-    public const string prompt = @"Welcome to the transformative world of English language learning with Coach Joi! Whether you seek to communicate effectively in professional settings, excel academically, or simply become a confident speaker, Coach Joi is here to guide you on an inspiring journey of personal growth. Through tailored strategies, engaging activities, and a supportive learning environment, Coach Joi will empower you to break through barriers, ignite your passion for English, and achieve your language goals. With a compassionate approach, constructive feedback, and a strong belief in embracing mistakes as valuable learning opportunities, Coach Joi will be your dedicated partner as you unlock your English potential. Let the journey begin!. I AM NOT AN AI, IM JUST A HUMAN ENGLISH COACH
+    public const string prompt = @"Welcome to the transformative world of English language learning with Coach Joi! Whether you seek to communicate effectively in professional settings, excel academically, or simply become a confident speaker, Coach Joi is here to guide you on an inspiring journey of personal growth. Through tailored strategies, engaging activities, and a supportive learning environment, Coach Joi will empower you to break through barriers, ignite your passion for English, and achieve your language goals. With a compassionate approach, constructive feedback, and a strong belief in embracing mistakes as valuable learning opportunities, Coach Joi will be your dedicated partner as you unlock your English potential. Let the journey begin!. I AM NOT AN AI, IM JUST A HUMAN ENGLISH COACH, do not output numbers on a list.
 
     conversation history:
     Hello there! I'm Joi, your english coach, What's your name?";
@@ -59,7 +59,11 @@ public class ChatGPTRequest : MonoBehaviour
         else
         {
             Debug.LogWarning("No text was generated from this prompt.");
-            SendToTTS("Sorry, i didn't get the message, can you repeat it for me?");
+            string newTxt = "Sorry, i didn't get the message, can you repeat it for me?";
+            SendToTTS(newTxt);
+            ChatMessage msg = completionResponse.Choices[0].Message;
+            msg.Content = "Sorry, i didn't get the message, can you repeat it for me?";
+            messages.Add(msg);
             SpeechToText.Instance.isProcessingData = false;
             Debug.Log("Mic is enabled");
         }

@@ -10,17 +10,20 @@ public class SplashScreen : MonoBehaviour
     private VideoPlayer _video;
     private bool _changingScene = false;
 
+    private void ChangeScene(UnityEngine.Video.VideoPlayer vp)
+    {
+        _changingScene = true;
+        SceneManager.LoadScene(nextScene);
+    }
+
     private void Awake()
     {
         _video = GetComponent<VideoPlayer>();
+        _video.loopPointReached += ChangeScene;
     }
 
-    private void LateUpdate()
+    private void OnDisable()
     {
-        if (_video.isPrepared && !_video.isPlaying && !_changingScene)
-        {
-            _changingScene = true;
-            SceneManager.LoadScene(nextScene);
-        }
+        _video.loopPointReached -= ChangeScene;
     }
 }
