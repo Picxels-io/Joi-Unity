@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using CrazyMinnow.SALSA.RTVoice;
+using Crosstales.RTVoice;
+using Crosstales.RTVoice.Model;
 using OpenAI;
 using TMPro;
 using UnityEngine;
@@ -12,13 +15,20 @@ public class ChatGPTRequest : MonoBehaviour
 
     [SerializeField] private int maxHistoryStorage = 30;
 
-    private Salsa_RTVoice _rtVoice;
+    private Salsa_RTVoice _womanVoice;
+    private Salsa_RTVoice _manVoice;
+
+    private Salsa_RTVoice _currentVoice;
 
     private Queue<string> history = new Queue<string>();
     private List<ChatMessage> messages = new List<ChatMessage>();
     private OpenAIApi openai = new OpenAIApi("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");
 
+    private const string changeCharCmd = "CHANGE_CHARACTER_COMMAND";
+
     public const string prompt = @"Welcome to the transformative world of English language learning with Coach Joi! Whether you seek to communicate effectively in professional settings, excel academically, or simply become a confident speaker, Coach Joi is here to guide you on an inspiring journey of personal growth. Through tailored strategies, engaging activities, and a supportive learning environment, Coach Joi will empower you to break through barriers, ignite your passion for English, and achieve your language goals. With a compassionate approach, constructive feedback, and a strong belief in embracing mistakes as valuable learning opportunities, Coach Joi will be your dedicated partner as you unlock your English potential. Let the journey begin!. I AM NOT AN AI, IM JUST A HUMAN ENGLISH COACH, do not output numbers on a list.
+
+    If user wants to change the character, start the response with CHANGE_CHARACTER_COMMAND, then say a little farewell
 
     conversation history:
     Hello there! I'm Joi, your english coach, What's your name?";
@@ -54,7 +64,8 @@ public class ChatGPTRequest : MonoBehaviour
 
             messages.Add(message);
             Debug.Log("Answer Succesfully brought");
-            SendToTTS(message.Content);
+            string responseNoCmds = CheckCommands(message.Content);
+            SendToTTS(responseNoCmds);
         }
         else
         {
@@ -71,8 +82,43 @@ public class ChatGPTRequest : MonoBehaviour
 
     private void SendToTTS(string txt)
     {
-        _rtVoice.speakText = txt;
-        _rtVoice.speak = true;
+        _currentVoice.speakText = txt;
+        _currentVoice.speak = true;
+    }
+
+    private string CheckCommands(string response)
+    {
+        string responseNoCmds = response;
+
+        if (response.Contains(changeCharCmd))
+        {
+            Speaker.Instance.OnSpeakComplete += ChangeCharacter;
+            responseNoCmds = response.Remove(0, changeCharCmd.Length);
+        }
+
+        return responseNoCmds;
+    }
+
+    private void ChangeCharacter(Wrapper wrapper)
+    {
+        SpeechToText.Instance.isProcessingData = true;
+
+        _currentVoice.transform.parent.gameObject.SetActive(false);
+
+        if (_currentVoice == _womanVoice)
+        {
+            _currentVoice = _manVoice;
+        }
+        else
+        {
+            _currentVoice = _womanVoice;
+        }
+
+        _currentVoice.transform.parent.gameObject.SetActive(true);
+        _currentVoice.speakText = "Hello, i'm Joe, how can i assist you today";
+        _currentVoice.speak = true;
+
+        Speaker.Instance.OnSpeakComplete -= ChangeCharacter;
     }
 
     private void Awake()
@@ -83,7 +129,12 @@ public class ChatGPTRequest : MonoBehaviour
 
     private void Start()
     {
-        _rtVoice = FindObjectOfType<Salsa_RTVoice>();
+        _womanVoice = GameObject.Find("Woman").GetComponentInChildren<Salsa_RTVoice>();
+        _manVoice = GameObject.Find("Man").GetComponentInChildren<Salsa_RTVoice>();
+        _manVoice.transform.parent.gameObject.SetActive(false);
+
+        _currentVoice = _womanVoice;
+
         SpeechToText.Instance.textGiven += SendRequest;
     }
 
