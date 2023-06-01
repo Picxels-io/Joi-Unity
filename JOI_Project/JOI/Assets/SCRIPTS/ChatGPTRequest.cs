@@ -28,7 +28,7 @@ public class ChatGPTRequest : MonoBehaviour
 
     public const string prompt = @"Welcome to the transformative world of English language learning with Coach Joi! Whether you seek to communicate effectively in professional settings, excel academically, or simply become a confident speaker, Coach Joi is here to guide you on an inspiring journey of personal growth. Through tailored strategies, engaging activities, and a supportive learning environment, Coach Joi will empower you to break through barriers, ignite your passion for English, and achieve your language goals. With a compassionate approach, constructive feedback, and a strong belief in embracing mistakes as valuable learning opportunities, Coach Joi will be your dedicated partner as you unlock your English potential. Let the journey begin!. I AM NOT AN AI, IM JUST A HUMAN ENGLISH COACH, do not output numbers on a list.
 
-    If user wants to change the character, start the response with CHANGE_CHARACTER_COMMAND, then say a little farewell
+    If user wants to change the character, or to talk with another coach, start the response with CHANGE_CHARACTER_COMMAND, then say a little farewell
 
     conversation history:
     Hello there! I'm Joi, your english coach, What's your name?";
@@ -72,8 +72,8 @@ public class ChatGPTRequest : MonoBehaviour
             Debug.LogWarning("No text was generated from this prompt.");
             string newTxt = "Sorry, i didn't get the message, can you repeat it for me?";
             SendToTTS(newTxt);
-            ChatMessage msg = completionResponse.Choices[0].Message;
-            msg.Content = "Sorry, i didn't get the message, can you repeat it for me?";
+            ChatMessage msg = new ChatMessage { Role = "user", Content = newTxt };
+            msg.Content = newTxt;
             messages.Add(msg);
             SpeechToText.Instance.isProcessingData = false;
             Debug.Log("Mic is enabled");
@@ -92,6 +92,7 @@ public class ChatGPTRequest : MonoBehaviour
 
         if (response.Contains(changeCharCmd))
         {
+            Debug.Log("COMANDO!??");
             Speaker.Instance.OnSpeakComplete += ChangeCharacter;
             responseNoCmds = response.Remove(0, changeCharCmd.Length);
         }
@@ -115,7 +116,18 @@ public class ChatGPTRequest : MonoBehaviour
         }
 
         _currentVoice.transform.parent.gameObject.SetActive(true);
-        _currentVoice.speakText = "Hello, i'm Joe, how can i assist you today";
+
+        string text = "";
+
+        if (_currentVoice == _manVoice) text = "Hello, i'm Joe, how can i assist you today";
+        if (_currentVoice == _womanVoice) text = "Hello, i'm Joi, how can i assist you today";
+
+        _currentVoice.speakText = text;
+
+        // Agregamos el mensaje al historial para que chatgpt esté en el contexto
+        ChatMessage newMsg = new ChatMessage { Role = "user", Content = text };
+        messages.Add(newMsg);
+
         _currentVoice.speak = true;
 
         Speaker.Instance.OnSpeakComplete -= ChangeCharacter;

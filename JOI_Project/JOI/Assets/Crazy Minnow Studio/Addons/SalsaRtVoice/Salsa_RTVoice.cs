@@ -12,7 +12,7 @@ namespace CrazyMinnow.SALSA.RTVoice
         public AudioSource audioSrc; // AudioSource used by SALSA
         public string speakText = "This is a test using SALSA with RT-Voice"; // Text to pass to Speak
         public bool speak; // Inspector button to fire the speak event
-        public int voice = 3;
+        public string voice = "JennyNeural";
 
         private bool _isSpeaking = false;
 
@@ -52,7 +52,7 @@ namespace CrazyMinnow.SALSA.RTVoice
             {
                 speak = false;
                 _isSpeaking = true;
-                Speaker.Instance.Speak(speakText, audioSrc, Speaker.Instance.VoiceForName("JennyNeural", true));
+                Speaker.Instance.Speak(speakText, audioSrc, Speaker.Instance.VoiceForName(voice, true));
             }
         }
     }
