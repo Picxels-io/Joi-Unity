@@ -337,7 +337,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &107177013
 GameObject:
@@ -495,6 +495,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b162bfc3016484e93b441a04b07e5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &331640760
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 331640761}
+  m_Layer: 0
+  m_Name: Places
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &331640761
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331640760}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 152.32027, y: 439.5581, z: -372.18677}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1671192234}
+  - {fileID: 1209114949}
+  - {fileID: 541935880}
+  - {fileID: 865269890}
+  - {fileID: 929274043}
+  - {fileID: 1810921622}
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &336350169
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,7 +865,7 @@ GameObject:
   - component: {fileID: 541935880}
   - component: {fileID: 541935879}
   m_Layer: 0
-  m_Name: estatua-de-la-libertad-9
+  m_Name: NewYork
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -893,13 +930,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 541935878}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.59, y: 1.02, z: -2.29}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -152.91026, y: -438.53812, z: 369.89676}
   m_LocalScale: {x: -0.25881886, y: 0.22753307, z: 0.22753307}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_Father: {fileID: 331640761}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &599510366
 GameObject:
@@ -1676,7 +1713,7 @@ GameObject:
   - component: {fileID: 865269890}
   - component: {fileID: 865269889}
   m_Layer: 0
-  m_Name: city
+  m_Name: City
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1741,13 +1778,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 865269888}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.03, y: 1.07, z: -2.3696685}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -152.35027, y: -438.4881, z: 369.8171}
   m_LocalScale: {x: 0.3752817, y: 0.31273478, z: 0.31273478}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_Father: {fileID: 331640761}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &905169234
 GameObject:
@@ -1811,14 +1848,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915738553}
-  m_LocalRotation: {x: 0.0002640888, y: -0.9974374, z: 0.07132298, w: 0.0056305737}
+  m_LocalRotation: {x: 0, y: -0.9974533, z: 0.07132333, w: 0}
   m_LocalPosition: {x: 0.01, y: 1.595138, z: 1.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1149403180}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 8.18, y: -179.352, z: 0.016}
+  m_LocalEulerAnglesHint: {x: 8.18, y: -180, z: 0}
 --- !u!114 &915738555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1914,7 +1951,7 @@ GameObject:
   - component: {fileID: 929274043}
   - component: {fileID: 929274042}
   m_Layer: 0
-  m_Name: san francisco
+  m_Name: SanFrancisco
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1979,13 +2016,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 929274041}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.31, y: 0.55, z: -3.08}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -152.63026, y: -439.00812, z: 369.10678}
   m_LocalScale: {x: 0.39769724, y: 0.39769724, z: 0.39769724}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_Father: {fileID: 331640761}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &947940512
 GameObject:
@@ -2108,7 +2145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7c7fcce40a834647a51a23abc359e2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _threshold: 0.005
+  _threshold: 0.0045
   _waitTime: 1
   _updateLoudnessTime: 0.1
   _voiceIndicator: {fileID: 947940512}
@@ -9123,7 +9160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0498b5cc02c4344c9f424ed48889d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHistoryStorage: 30
+  _requestSettings: {fileID: 11400000, guid: 4800c6b2d29f3e0499d44c30ae49541f, type: 2}
 --- !u!1 &1127785007
 GameObject:
   m_ObjectHideFlags: 0
@@ -9279,7 +9316,7 @@ GameObject:
   - component: {fileID: 1209114949}
   - component: {fileID: 1209114948}
   m_Layer: 0
-  m_Name: pisa italy
+  m_Name: Pisa
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9344,13 +9381,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1209114947}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.068122, y: 1.21, z: -2.15}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -152.25215, y: -438.3481, z: 370.03677}
   m_LocalScale: {x: 0.19535093, y: 0.19779281, z: 0.19535093}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_Father: {fileID: 331640761}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1231490863
 GameObject:
@@ -21301,7 +21338,7 @@ GameObject:
   - component: {fileID: 1671192234}
   - component: {fileID: 1671192233}
   m_Layer: 0
-  m_Name: paris
+  m_Name: Paris
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21366,13 +21403,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1671192232}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.379, y: 1.09, z: -1.51}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -151.94127, y: -438.4681, z: 370.67676}
   m_LocalScale: {x: 0.2045, y: 0.2045, z: 0.2045}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_Father: {fileID: 331640761}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1673475678
 GameObject:
@@ -21447,7 +21484,7 @@ GameObject:
   - component: {fileID: 1810921622}
   - component: {fileID: 1810921621}
   m_Layer: 0
-  m_Name: PARK
+  m_Name: Park
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21512,13 +21549,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1810921620}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.054974, y: 0.97, z: -3.54}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -152.37524, y: -438.5881, z: 368.64676}
   m_LocalScale: {x: 0.21334, y: 0.21334, z: 0.21334}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_Father: {fileID: 331640761}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1816734238
 GameObject:

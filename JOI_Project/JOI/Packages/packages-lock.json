@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.soupday.cc3_unity_tools": {
-      "version": "file:C:/Users/jColo/OneDrive/Escritorio/Pixcels/JOI_/cc_unity_tools_URP-1.4.9.URP12",
+      "version": "file:C:/Users/jColo/OneDrive/Escritorio/Pixcels/JOI_Repo/Joi-Unity/JOI_Project/cc_unity_tools_URP-1.4.9.URP12",
       "depth": 0,
       "source": "local",
       "dependencies": {
@@ -9,7 +9,7 @@
       }
     },
     "com.srcnalt.openai-unity": {
-      "version": "file:C:/Users/jColo/OneDrive/Escritorio/Pixcels/JOI_/OpenAI-Unity-master",
+      "version": "file:C:/Users/jColo/OneDrive/Escritorio/Pixcels/JOI_Repo/Joi-Unity/JOI_Project/OpenAI-Unity-master",
       "depth": 0,
       "source": "local",
       "dependencies": {

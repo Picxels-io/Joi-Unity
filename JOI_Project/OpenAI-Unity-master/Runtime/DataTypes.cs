@@ -112,10 +112,12 @@ namespace OpenAI
         public string FinishReason { get; set; }
     }
 
+    [System.Serializable]
     public struct ChatMessage
     {
-        public string Role { get; set; }
-        public string Content { get; set; }
+        public string Role;
+        [UnityEngine.TextArea(1, 50)]
+        public string Content;
     }
     
     #endregion

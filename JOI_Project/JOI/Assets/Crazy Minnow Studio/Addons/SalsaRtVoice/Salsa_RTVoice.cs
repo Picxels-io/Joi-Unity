@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using Crosstales.RTVoice;
+using Crosstales.RTVoice.Model;
+using System;
 
 namespace CrazyMinnow.SALSA.RTVoice
 {
@@ -34,6 +36,7 @@ namespace CrazyMinnow.SALSA.RTVoice
         {
             Speaker.Instance.OnSpeakComplete += SpeakCompleted;
         }
+
         private void OnDisable()
         {
             Speaker.Instance.OnSpeakComplete -= SpeakCompleted;

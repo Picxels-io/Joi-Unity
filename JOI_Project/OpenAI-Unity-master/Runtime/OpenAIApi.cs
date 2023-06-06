@@ -249,6 +249,7 @@ namespace OpenAI
         public async Task<CreateChatCompletionResponse> CreateChatCompletion(CreateChatCompletionRequest request)
         {
             var path = $"{BASE_PATH}/chat/completions";
+            // var path = $"{BASE_PATH}/completions";
             var payload = CreatePayload(request);
 
             return await DispatchRequest<CreateChatCompletionResponse>(path, UnityWebRequest.kHttpVerbPOST, payload);
@@ -264,6 +265,7 @@ namespace OpenAI
         public void CreateChatCompletionAsync(CreateChatCompletionRequest request, Action<List<CreateChatCompletionResponse>> onResponse, Action onComplete, CancellationTokenSource token)
         {
             request.Stream = true;
+
             var path = $"{BASE_PATH}/chat/completions";
             var payload = CreatePayload(request);
 

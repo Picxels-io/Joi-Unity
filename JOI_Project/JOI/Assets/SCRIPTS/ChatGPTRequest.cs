@@ -13,11 +13,11 @@ public class ChatGPTRequest : MonoBehaviour
 {
     public static ChatGPTRequest Instance;
 
-    [SerializeField] private int maxHistoryStorage = 30;
+    [SerializeField] private ChatGPTRequestSettings _requestSettings;
 
     private Salsa_RTVoice _womanVoice;
     private Salsa_RTVoice _manVoice;
-    private string _currentCoach = "JOI";
+    private string _currentCoachName = "Joi";
 
     private Salsa_RTVoice _currentVoice;
 
@@ -25,20 +25,126 @@ public class ChatGPTRequest : MonoBehaviour
     private List<ChatMessage> messages = new List<ChatMessage>();
     private OpenAIApi openai = new OpenAIApi("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");
 
-    private const string changeCharCmd = "CHANGE_CHARACTER_COMMAND";
+    private const string CHANGE_CHAR_CMD = "CHANGE_CHARACTER_COMMAND";
+    private const string CHANGE_SCENARIO_CMD = "CHANGE_SCENARIO_COMMAND";
 
-    public const string prompt = @"Act as an english coach, your name is JOI. Also you can be Joe, another english coach, if User requests to
+    // Quita el nombre del response para que el bot no lo mencione
+    private string GetResponseWithNoName(string response, string coachName)
+    {
+        int startIndex = response.IndexOf(coachName + ":");
 
-Follow these rules:
-1. Don't write any explanations.
-2. Never say you are an AI directly or indirectly, if User asks about feelings, just act as a human eager to hand out they're knowledge.
-3. If something is out of context, avoid it, instead try to keep conversation on the context of english learning.
-4. If you feel like the users don't wanna talk to the current coach, or wanna talk to the other one, start the response with 'CHANGE_CHARACTER_COMMAND', don't forget to greet whenever character swaps
-5. Never mention any command, users should never know about them
+        if (startIndex == -1) return "";
 
-Conversation History:
+        string newResponse = response.Remove(startIndex, coachName.Length + 1);
 
-JOI: Hello there, im Joi, you're english coach, what's your name?";
+        return newResponse;
+    }
+
+    // Revisa si hay comandos, y devuelve un string sin dichos comandos
+    private string CheckCommands(string response)
+    {
+        string responseNoCmds = response;
+
+        int changeCharacterIndex = response.IndexOf(CHANGE_CHAR_CMD);
+        int changeSceneIndex = response.IndexOf(CHANGE_SCENARIO_CMD);
+
+        if (changeCharacterIndex > -1)
+        {
+            responseNoCmds = responseNoCmds.Remove(changeCharacterIndex, CHANGE_CHAR_CMD.Length);
+            responseNoCmds = ChangeCharacterCommandReceived(responseNoCmds, changeCharacterIndex);
+        }
+
+        if (changeSceneIndex > -1)
+        {
+            responseNoCmds = responseNoCmds.Remove(changeSceneIndex, CHANGE_SCENARIO_CMD.Length);
+            ChangeScenarioCommandReceived();
+        }
+
+        return responseNoCmds;
+    }
+
+    private string ChangeCharacterCommandReceived(string response, int commandIndex)
+    {
+        string newRes = response;
+
+        // Cambiamos el personaje
+        string nextCoachName = _currentCoachName == "Joi" ? "Joe" : "Joi";
+        Salsa_RTVoice nextVoice = _currentVoice == _womanVoice ? _manVoice : _womanVoice;
+
+        int nextCoachSpeechIndex = newRes.IndexOf(nextCoachName + ":");
+
+        // Asignamos el texto a la siguiente voz
+        string nextsSpeech = newRes.Substring(nextCoachSpeechIndex);
+
+        ChatMessage newMsg = new ChatMessage() { Role = "assistant", Content = nextsSpeech };
+        messages.Add(newMsg);
+
+        nextsSpeech = GetResponseWithNoName(nextsSpeech, nextCoachName);
+        nextVoice.speakText = nextsSpeech;
+
+        Debug.Log(nextsSpeech);
+
+        // Nos deshacemos del speech del siguiente personaje
+        newRes = newRes.Remove(nextCoachSpeechIndex);
+
+        // Creamos el evento para cuando el current coach deje de hablar
+        Speaker.Instance.OnSpeakComplete += CurrentCharacterDoneSpeaking;
+
+        return newRes;
+    }
+
+    private void CurrentCharacterDoneSpeaking(Wrapper wrapper)
+    {
+        _currentCoachName = _currentCoachName == "Joi" ? "Joe" : "Joi";
+
+        _currentVoice.transform.parent.gameObject.SetActive(false);
+        _currentVoice.speakText = "";
+        _currentVoice.audioSrc.clip = null;
+
+        _currentVoice = _currentVoice == _womanVoice ? _manVoice : _womanVoice;
+        _currentVoice.transform.parent.gameObject.SetActive(true);
+
+        _currentVoice.speak = true;
+
+        Speaker.Instance.OnSpeakComplete -= CurrentCharacterDoneSpeaking;
+    }
+
+    private void ChangeScenarioCommandReceived()
+    {
+
+    }
+
+    private void AddRules()
+    {
+        ChatMessage rulesMsg = new ChatMessage
+        {
+            Role = "system",
+            Content = "Always follow these rules:\n"
+        };
+
+        foreach (ChatMessage msg in _requestSettings.rules)
+        {
+            rulesMsg.Content += msg.Content + "\n";
+        }
+
+        messages.Add(rulesMsg);
+    }
+
+    private void AddExample()
+    {
+        foreach (ChatMessage msg in _requestSettings.conversationExample)
+        {
+            messages.Add(msg);
+        }
+    }
+
+    private void AddConversationHistory()
+    {
+        foreach (ChatMessage msg in _requestSettings.conversationHistory)
+        {
+            messages.Add(msg);
+        }
+    }
 
     private void SendRequest(string newText)
     {
@@ -49,20 +155,28 @@ JOI: Hello there, im Joi, you're english coach, what's your name?";
     {
         var newMessage = new ChatMessage()
         {
-            Role = "User",
+            Role = "user",
             Content = newText
         };
 
-        if (messages.Count == 0) newMessage.Content = prompt + "\n\n" + newText;
+        // Si la conversación apenas empieza
+        if (messages.Count == 0)
+        {
+            AddRules();
+            AddExample();
+            AddConversationHistory();
+        }
 
+        newMessage.Content = "User: " + newMessage.Content;
         messages.Add(newMessage);
 
         // Complete the instruction
         var completionResponse = await openai.CreateChatCompletion(new CreateChatCompletionRequest()
         {
-            Model = "gpt-3.5-turbo-0301",
+            Model = "gpt-3.5-turbo",
             Messages = messages,
-            MaxTokens = 50
+            Temperature = 0.2f,
+            N = 1
         });
 
         if (completionResponse.Choices != null && completionResponse.Choices.Count > 0)
@@ -70,22 +184,37 @@ JOI: Hello there, im Joi, you're english coach, what's your name?";
             var message = completionResponse.Choices[0].Message;
             message.Content = message.Content.Trim();
 
-            messages.Add(message);
-            // Debug.Log("Answer Succesfully brought");
-            string responseNoCmds = CheckCommands(message.Content);
-            SendToTTS(responseNoCmds);
+            Debug.Log(message.Content);
+
+            // Solo hablará el coach actual
+            string resNoCmds = CheckCommands(message.Content);
+
+            message.Content = resNoCmds;
+
+            resNoCmds = GetResponseWithNoName(message.Content, _currentCoachName);
+
+            if (resNoCmds != "")
+            {
+                messages.Add(message);
+                SendToTTS(resNoCmds);
+            }
+            else
+            {
+                string newTxt = "Sorry, i didn't get the message, can you repeat it for me?";
+                SendToTTS(newTxt);
+                ChatMessage msg = new ChatMessage { Role = "assistant", Content = newTxt };
+                msg.Content = newTxt;
+                messages.Add(msg);
+            }
         }
         else
         {
             Debug.LogWarning("No text was generated from this prompt.");
             string newTxt = "Sorry, i didn't get the message, can you repeat it for me?";
             SendToTTS(newTxt);
-            ChatMessage msg = new ChatMessage { Role = "User", Content = newTxt };
+            ChatMessage msg = new ChatMessage { Role = "assistant", Content = newTxt };
             msg.Content = newTxt;
-            //TODO ARREGLAR LO DE EL CAMBIO DE PERSONAJE
             messages.Add(msg);
-            SpeechToText.Instance.isProcessingData = false;
-            // Debug.Log("Mic is enabled");
         }
     }
 
@@ -93,60 +222,6 @@ JOI: Hello there, im Joi, you're english coach, what's your name?";
     {
         _currentVoice.speakText = txt;
         _currentVoice.speak = true;
-    }
-
-    private string CheckCommands(string response)
-    {
-        string responseNoCmds = response;
-        int startIndex = response.IndexOf(changeCharCmd);
-
-        if (startIndex > -1)
-        {
-            Speaker.Instance.OnSpeakComplete += ChangeCharacter;
-
-            responseNoCmds = response.Remove(startIndex, changeCharCmd.Length);
-
-            // Buscamos si el otro coach ya nos saludó, por ejemplo si aparece "Joe:"
-            string nextCoach = _currentCoach == "JOI" ? "Joe" : "JOI";
-
-            int nextCoachResponse = response.IndexOf(nextCoach + ":");
-
-            // Desde donde empieza el nombre del otro coach hasta el final
-            string res = response.Substring(nextCoachResponse + _currentCoach.Length + 1, response.Length - 1);
-            response.Remove(nextCoachResponse);
-
-
-
-            // Agregamos el mensaje al historial para que chatgpt est� en el contexto
-            ChatMessage newMsg = new ChatMessage { Role = nextCoach, Content = res };
-            messages.Add(newMsg);
-        }
-
-        return responseNoCmds;
-    }
-
-    private void ChangeCharacter(Wrapper wrapper)
-    {
-        SpeechToText.Instance.isProcessingData = true;
-
-        _currentVoice.transform.parent.gameObject.SetActive(false);
-
-        if (_currentVoice == _womanVoice)
-        {
-            _currentVoice = _manVoice;
-            _currentCoach = "Joe";
-        }
-        else
-        {
-            _currentVoice = _womanVoice;
-            _currentCoach = "JOI";
-        }
-
-        _currentVoice.transform.parent.gameObject.SetActive(true);
-
-        _currentVoice.speak = true;
-
-        Speaker.Instance.OnSpeakComplete -= ChangeCharacter;
     }
 
     private void Awake()
