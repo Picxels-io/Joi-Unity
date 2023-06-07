@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a80beedda4719614c91caee2564fae1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothness: 10
+  smoothness: 8
 --- !u!1 &93649374
 GameObject:
   m_ObjectHideFlags: 0
@@ -2145,7 +2145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7c7fcce40a834647a51a23abc359e2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _threshold: 0.0045
+  _threshold: 0.004
   _waitTime: 1
   _updateLoudnessTime: 0.1
   _voiceIndicator: {fileID: 947940512}
@@ -9382,8 +9382,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1209114947}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -152.25215, y: -438.3481, z: 370.03677}
-  m_LocalScale: {x: 0.19535093, y: 0.19779281, z: 0.19535093}
+  m_LocalPosition: {x: -152.25215, y: -438.5, z: 370.03677}
+  m_LocalScale: {x: 0.21951585, y: 0.22225979, z: 0.21951585}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 331640761}

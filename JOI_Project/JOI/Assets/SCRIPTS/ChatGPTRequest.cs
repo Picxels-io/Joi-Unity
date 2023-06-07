@@ -95,6 +95,8 @@ public class ChatGPTRequest : MonoBehaviour
 
     private void CurrentCharacterDoneSpeaking(Wrapper wrapper)
     {
+        SpeechToText.Instance.isProcessingData = true;
+
         _currentCoachName = _currentCoachName == "Joi" ? "Joe" : "Joi";
 
         _currentVoice.transform.parent.gameObject.SetActive(false);
@@ -111,7 +113,7 @@ public class ChatGPTRequest : MonoBehaviour
 
     private void ChangeScenarioCommandReceived()
     {
-
+        ChangeStage.Instance.ChangeScenario();
     }
 
     private void AddRules()
@@ -170,12 +172,14 @@ public class ChatGPTRequest : MonoBehaviour
         newMessage.Content = "User: " + newMessage.Content;
         messages.Add(newMessage);
 
+        Debug.Log(newMessage.Content);
+
         // Complete the instruction
         var completionResponse = await openai.CreateChatCompletion(new CreateChatCompletionRequest()
         {
             Model = "gpt-3.5-turbo",
             Messages = messages,
-            Temperature = 0.2f,
+            Temperature = 0.1f,
             N = 1
         });
 
@@ -183,7 +187,6 @@ public class ChatGPTRequest : MonoBehaviour
         {
             var message = completionResponse.Choices[0].Message;
             message.Content = message.Content.Trim();
-
             Debug.Log(message.Content);
 
             // Solo hablará el coach actual
@@ -200,11 +203,12 @@ public class ChatGPTRequest : MonoBehaviour
             }
             else
             {
-                string newTxt = "Sorry, i didn't get the message, can you repeat it for me?";
-                SendToTTS(newTxt);
-                ChatMessage msg = new ChatMessage { Role = "assistant", Content = newTxt };
-                msg.Content = newTxt;
-                messages.Add(msg);
+                // string newTxt = "Sorry, i didn't get the message, can you repeat it for me?";
+                // SendToTTS(newTxt);
+                // ChatMessage msg = new ChatMessage { Role = "assistant", Content = newTxt };
+                // msg.Content = newTxt;
+                // messages.Add(msg);
+                SpeechToText.Instance.isProcessingData = false;
             }
         }
         else

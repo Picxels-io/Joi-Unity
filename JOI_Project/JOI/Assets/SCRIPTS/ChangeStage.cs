@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ChangeStage : MonoBehaviour
 {
+    public static ChangeStage Instance;
+
     [SerializeField] private List<GameObject> _stages;
 
     private int _currentActiveStage = 0;
@@ -24,5 +26,10 @@ public class ChangeStage : MonoBehaviour
         }
 
         _stages[stageIndex].SetActive(true);
+    }
+
+    private void Awake()
+    {
+        Instance = this;
     }
 }
