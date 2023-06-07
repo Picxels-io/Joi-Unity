@@ -81,7 +81,7 @@ namespace OpenAI
     public sealed class CreateChatCompletionRequest
     {
         public string Model { get; set; }
-        public List<ChatMessage> Messages { get; set; }
+        public List<string> Prompt { get; set; }
         public float? Temperature { get; set; } = 1;
         public int N { get; set; } = 1;
         public bool Stream { get; set; } = false;
@@ -106,8 +106,8 @@ namespace OpenAI
     
     public struct ChatChoice
     {
-        public ChatMessage Message { get; set; }
-        public ChatMessage Delta { get; set; }
+        public string Text { get; set; }
+        public string Delta { get; set; }
         public int? Index { get; set; }
         public string FinishReason { get; set; }
     }
@@ -115,7 +115,6 @@ namespace OpenAI
     [System.Serializable]
     public struct ChatMessage
     {
-        public string Role;
         [UnityEngine.TextArea(1, 50)]
         public string Content;
     }

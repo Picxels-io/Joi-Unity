@@ -79,6 +79,8 @@ namespace OpenAI
 
                 while (!asyncOperation.isDone) await Task.Yield();
 
+                Debug.Log(typeof(T));
+
                 data = JsonConvert.DeserializeObject<T>(request.downloadHandler.text, jsonSerializerSettings);
             }
 
@@ -190,6 +192,7 @@ namespace OpenAI
         private byte[] CreatePayload<T>(T request)
         {
             var json = JsonConvert.SerializeObject(request, jsonSerializerSettings);
+            Debug.Log(json);
             return Encoding.UTF8.GetBytes(json);
         }
 
@@ -248,8 +251,8 @@ namespace OpenAI
         /// <returns>See <see cref="CreateChatCompletionResponse"/></returns>
         public async Task<CreateChatCompletionResponse> CreateChatCompletion(CreateChatCompletionRequest request)
         {
-            var path = $"{BASE_PATH}/chat/completions";
-            // var path = $"{BASE_PATH}/completions";
+            // var path = $"{BASE_PATH}/chat/completions";
+            var path = $"{BASE_PATH}/completions";
             var payload = CreatePayload(request);
 
             return await DispatchRequest<CreateChatCompletionResponse>(path, UnityWebRequest.kHttpVerbPOST, payload);
