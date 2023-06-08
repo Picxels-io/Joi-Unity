@@ -2145,8 +2145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7c7fcce40a834647a51a23abc359e2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _threshold: 0.004
-  _waitTime: 1
+  _threshold: 0.0045
+  _waitTime: 2
   _updateLoudnessTime: 0.1
   _voiceIndicator: {fileID: 947940512}
   isProcessingData: 0
@@ -32389,7 +32389,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &8806096024101672112
 GameObject:
   m_ObjectHideFlags: 0

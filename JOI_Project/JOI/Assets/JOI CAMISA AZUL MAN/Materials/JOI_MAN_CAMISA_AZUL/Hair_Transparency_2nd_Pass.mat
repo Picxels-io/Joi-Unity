@@ -8,22 +8,15 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Hair_Transparency_2nd_Pass
-  m_Shader: {fileID: 4800000, guid: 0b271f7c00cdc6b4cb64979cff408d9c, type: 3}
-  m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _ALPHATEST_ON
-  - _ALPHATOMASK_ON
-  - _CLIPQUALITY_DITHERED
-  - _DISABLE_SSR_TRANSPARENT
-  - _DOUBLESIDED_ON
-  - _ENABLE_FOG_ON_TRANSPARENT
-  - _ENUMCLIPQUALITY_ON_DITHER
-  - _SURFACE_TYPE_TRANSPARENT
-  - _TRANSPARENT_WRITES_MOTION_VEC
+  m_Shader: {fileID: -6465566751694194690, guid: 484c818db3202dc48bac7074ef16e8e3,
+    type: 3}
+  m_ValidKeywords:
+  - _ENUMCLIPQUALITY_ON_STANDARD
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: -1
   stringTagMap:
     MotionVector: User
   disabledShaderPasses:
@@ -97,6 +90,7 @@ Material:
     - _BlendStrength: 1
     - _ClipQuality: 1
     - _DiffuseStrength: 1
+    - _ENUMCLIPQUALITY_ON: 0
     - _EndColorStrength: 1
     - _FlowMapFlipGreen: 0
     - _GlobalStrength: 1
@@ -109,7 +103,7 @@ Material:
     - _HighlightBlend: 1
     - _InvertRootMap: 0
     - _NormalStrength: 1
-    - _QueueControl: -1
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _RimPower: 4
     - _RimTransmissionIntensity: 10.230792
@@ -120,6 +114,7 @@ Material:
     - _SmoothnessPower: 1
     - _SpecularMix: 0.5
     - _SpecularMultiplier: 0.13773888
+    - _SpecularPower: 4
     - _SpecularPowerScale: 4
     - _SpecularShiftMax: -0.489
     - _SpecularShiftMin: 0.283
@@ -140,3 +135,16 @@ Material:
     - _SpecularTint: {r: 1, g: 0.94059026, b: 0.8968692, a: 1}
     - _VertexBaseColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
+--- !u!114 &2783884890956766925
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
