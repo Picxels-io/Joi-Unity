@@ -31,9 +31,11 @@ public class SpeechToText : MonoBehaviour
     private int _recordStartSample = 0;
     private int _currentStartSample = 0;
 
+    // Touch way
+    private bool _isTouchingScreen;
+
     // Testing only
     private float timeSinceStartedProcessing = 0f;
-
     private readonly string _fileName = "output.wav";
 
     private AudioClip TrimClip(AudioClip clip, int start)
@@ -108,11 +110,13 @@ public class SpeechToText : MonoBehaviour
 
     private void ReadVoice()
     {
-        if (isProcessingData || !MicrophoneManager.Instance.IsRecording()) return;
+        if (isProcessingData) return;
 
+        Debug.Log(_isTouchingScreen);
         // Esta hablando lo suficientemente duro?
-        if (_loudness >= _threshold)
+        if (_isTouchingScreen)
         {
+            MicrophoneManager.Instance.StartMicrophone();
             if (!_wasRecording) _currentStartSample = _recordStartSample;
             _currentWaitTime = 0f;
             _wasRecording = true;
@@ -120,22 +124,22 @@ public class SpeechToText : MonoBehaviour
         }
         else
         {
-            if (_currentWaitTime < _waitTime)
-            {
-                // WaitTime es para que de una espera despues de que la persona termine de hablar
-                _currentWaitTime += Time.deltaTime;
-            }
-            else
-            {
-                _voiceIndicator.SetActive(false);
+            // if (_currentWaitTime < _waitTime)
+            // {
+            //     // WaitTime es para que de una espera despues de que la persona termine de hablar
+            //     _currentWaitTime += Time.deltaTime;
+            // }
+            // else
+            // {
+            _voiceIndicator.SetActive(false);
 
-                if (_wasRecording)
-                {
-                    isProcessingData = true;
-                    _wasRecording = false;
-                    EndRecording(_currentStartSample);
-                }
+            if (_wasRecording)
+            {
+                isProcessingData = true;
+                _wasRecording = false;
+                EndRecording(_currentStartSample);
             }
+            // }
         }
     }
 
@@ -171,11 +175,20 @@ public class SpeechToText : MonoBehaviour
 
     private void Update()
     {
-        CheckIfMicEnabled();
-    }
+#if UNITY_ANDROID && !UNITY_EDITOR
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            _isTouchingScreen = true;
+        }
+        else if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+        {
+            _isTouchingScreen = false;
+        }
+#else
+        _isTouchingScreen = Input.GetMouseButton(0);
+#endif
 
-    private void LateUpdate()
-    {
         ReadVoice();
+        // CheckIfMicEnabled();
     }
 }
