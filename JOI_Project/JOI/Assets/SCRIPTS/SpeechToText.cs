@@ -91,6 +91,7 @@ public class SpeechToText : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(res.Text))
             {
+                Debug.Log(res.Text);
                 // Debug.Log($"Audio processed succesfully: {res.Text} : {Time.time - timeSinceStartedProcessing }");
                 textGiven?.Invoke(res.Text);
             }
@@ -112,7 +113,6 @@ public class SpeechToText : MonoBehaviour
     {
         if (isProcessingData) return;
 
-        Debug.Log(_isTouchingScreen);
         // Esta hablando lo suficientemente duro?
         if (_isTouchingScreen)
         {
