@@ -17,13 +17,13 @@ public class ChatGPTRequest : MonoBehaviour
 
     private Salsa_RTVoice _womanVoice;
     private Salsa_RTVoice _manVoice;
-    private string _currentCoachName = "Joi";
+    private string _currentCoachName = "Assistant";
 
     private Salsa_RTVoice _currentVoice;
 
     private Queue<string> history = new Queue<string>();
     private List<ChatMessage> messages = new List<ChatMessage>();
-    private OpenAIApi openai = new OpenAIApi("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");
+    private OpenAIApi openai = new OpenAIApi("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");
 
     private const string CHANGE_CHAR_CMD = "CHANGE_CHARACTER_COMMAND";
     private const string CHANGE_SCENARIO_CMD = "CHANGE_SCENARIO_COMMAND";

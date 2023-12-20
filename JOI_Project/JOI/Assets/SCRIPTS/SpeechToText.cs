@@ -22,7 +22,7 @@ public class SpeechToText : MonoBehaviour
 
     private bool _wasRecording = false;
 
-    private OpenAIApi _openai = new OpenAIApi("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");
+    private OpenAIApi _openai = new OpenAIApi("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");
 
     private float _currentWaitTime = 0f;
     private float _loudness = 0f;
