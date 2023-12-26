@@ -23,11 +23,7 @@ public class ChatGPTRequest : MonoBehaviour
 
     private Queue<string> history = new Queue<string>();
     private List<ChatMessage> messages = new List<ChatMessage>();
-<<<<<<< Updated upstream
-    private OpenAIApi openai = new OpenAIApi("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");
-=======
     private OpenAIApi openai = new OpenAIApi("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");
->>>>>>> Stashed changes
 
     private const string CHANGE_CHAR_CMD = "CHANGE_CHARACTER_COMMAND";
     private const string CHANGE_SCENARIO_CMD = "CHANGE_SCENARIO_COMMAND";
