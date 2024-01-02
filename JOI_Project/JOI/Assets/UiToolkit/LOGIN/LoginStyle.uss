@@ -1,0 +1,9 @@
+VisualElement {
+}
+
+.signin-button {
+    border-left-color: rgba(88, 88, 88, 0);
+    border-right-color: rgba(88, 88, 88, 0);
+    border-top-color: rgba(88, 88, 88, 0);
+    border-bottom-color: rgba(88, 88, 88, 0);
+}

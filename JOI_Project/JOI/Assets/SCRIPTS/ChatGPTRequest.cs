@@ -18,13 +18,14 @@ public class ChatGPTRequest : MonoBehaviour
     private Salsa_RTVoice _womanVoice;
     private Salsa_RTVoice _manVoice;
     private string _currentCoachName = "Assistant";
-
+    private OpenAIApi openai;
+    private string apiKey;
     private Salsa_RTVoice _currentVoice;
 
     private Queue<string> history = new Queue<string>();
     private List<ChatMessage> messages = new List<ChatMessage>();
-    private OpenAIApi openai = new OpenAIApi("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");
 
+        // Obtener la API key de la variable de entorno
     private const string CHANGE_CHAR_CMD = "CHANGE_CHARACTER_COMMAND";
     private const string CHANGE_SCENARIO_CMD = "CHANGE_SCENARIO_COMMAND";
 
@@ -232,6 +233,13 @@ public class ChatGPTRequest : MonoBehaviour
     {
         Instance = this;
         DebugManager.instance.enableRuntimeUI = false;
+
+        // Inicializa la API key aquí
+        apiKey = System.Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+        
+        // Luego, inicializa la instancia de OpenAIApi
+        openai = new OpenAIApi(apiKey);
+
     }
 
     private void Start()

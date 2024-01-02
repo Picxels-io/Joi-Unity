@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UiToolkit/LOGIN/LoginStyle.uss?fileID=7433441132597879392&amp;guid=ddca2b7e01c2954478d68e618d6069c1&amp;type=3#LoginStyle" />
+    <ui:VisualElement name="background" style="width: 100%; height: 100%; align-items: center; justify-content: center; background-color: rgba(255, 255, 255, 255); border-left-color: rgba(88, 88, 88, 0); border-right-color: rgba(88, 88, 88, 0); border-top-color: rgba(88, 88, 88, 0); border-bottom-color: rgba(88, 88, 88, 0);">
+        <ui:VisualElement name="buttons" style="width: auto;">
+            <ui:Button display-tooltip-when-elided="true" name="google" class="signin-button" style="background-image: url(&apos;project://database/Assets/IMAGENES/Buttons-02.jpg?fileID=2800000&amp;guid=27defb468050a5748b645d8986be528a&amp;type=3#Buttons-02&apos;); width: 200px; height: 60px;" />
+            <ui:Button display-tooltip-when-elided="true" name="apple" class="signin-button" style="background-image: url(&apos;project://database/Assets/IMAGENES/Buttons_Mesa%20de%20trabajo%201.jpg?fileID=2800000&amp;guid=9f0ce7235d25cdb4284ece19f209b35c&amp;type=3#Buttons_Mesa de trabajo 1&apos;); width: 200px; height: 60px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

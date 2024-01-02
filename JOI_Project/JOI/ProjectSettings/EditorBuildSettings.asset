@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/04-JOI-MAN-AZUL.unity
     guid: 206021af4b0cd364fb68da1c4a8397a3
+  - enabled: 1
+    path: Assets/Scenes/SingIn.unity
+    guid: 148ca188f65659743a76befa52db0097
   m_configObjects: {}
