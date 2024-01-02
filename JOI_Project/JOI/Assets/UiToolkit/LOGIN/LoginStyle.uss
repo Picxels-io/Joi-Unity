@@ -6,4 +6,7 @@ VisualElement {
     border-right-color: rgba(88, 88, 88, 0);
     border-top-color: rgba(88, 88, 88, 0);
     border-bottom-color: rgba(88, 88, 88, 0);
+    width: 800px;
+    height: 220px;
+    background-color: rgba(88, 88, 88, 0);
 }
