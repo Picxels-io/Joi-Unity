@@ -5,22 +5,19 @@ using UnityEngine.UIElements;
 
 public class SignIn : MonoBehaviour
 {
-    // Referencia al UIDocument desde el Inspector
     public UIDocument uiDocument;
     public ChangeScene changeSceneScript;
+    public AuthenticationManager authenticationManagerScript;
+
     private void Start()
     {
-        // UiDocument existe?
         if (uiDocument != null)
         {
-            // Obtener el elemento raíz del UIDocument
             VisualElement rootElement = uiDocument.rootVisualElement;
 
-            // Obtener referencias a los botones usando sus identificadores únicos
             Button google = rootElement.Q<Button>("google");
             Button apple = rootElement.Q<Button>("apple");
 
-            // Asignar comportamientos de clic a los botones
             google.clickable.clicked += OnGoogleClick;
             apple.clickable.clicked += OnAppleClick;
             Debug.Log("Asignados");
@@ -34,7 +31,28 @@ public class SignIn : MonoBehaviour
     private void OnGoogleClick()
     {
         Debug.Log("Se hizo clic en Google.");
-        changeSceneScript.ChangeToScene("2");
+        authenticationManagerScript.StartAuthentication();
+        //changeSceneScript.ChangeToScene("2");
+        // Espera un breve momento (por ejemplo, 1 segundo) y luego verifica el estado de autenticación
+        //StartCoroutine(CheckAuthenticationStatus());
+    }
+
+    private IEnumerator CheckAuthenticationStatus()
+    {
+        yield return new WaitForSeconds(6); // Espera 1 segundo para asegurarse de que la corutina haya terminado
+
+        if (authenticationManagerScript.IsAuthenticationSuccessful())
+        {
+            // Si la autenticación fue exitosa, procede al siguiente paso
+            authenticationManagerScript.ResetAuthenticationStatus(); // Restablecer el estado de autenticación para futuras solicitudes
+            Debug.Log("Autenticación exitosa, procediendo al siguiente paso.");
+            // Aquí puedes llamar a cualquier función o acción que desees después de una autenticación exitosa
+        }
+        else
+        {
+            // Si la autenticación no fue exitosa, manejar el error o tomar medidas adecuadas
+            Debug.LogError("Autenticación no exitosa.");
+        }
     }
 
     private void OnAppleClick()
