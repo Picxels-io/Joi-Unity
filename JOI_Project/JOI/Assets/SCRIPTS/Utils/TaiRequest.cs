@@ -6,10 +6,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-public class HttpRequestExample : MonoBehaviour
+public class TaiRequest : MonoBehaviour
 {
     private const string apiUrl = "https://asktaiprod.azurewebsites.net/conversations";
-
     public void StartRequest(List<string> conversationHistory, List<string> userInput)
     {
         StartCoroutine(MakeRequest(conversationHistory, userInput));
