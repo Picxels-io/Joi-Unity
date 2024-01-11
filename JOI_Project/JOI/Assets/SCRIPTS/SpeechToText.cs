@@ -79,7 +79,7 @@ public class SpeechToText : MonoBehaviour
             // File = Application.persistentDataPath + "/" + fileName,
             Model = "whisper-1",
             Language = "en",
-            Prompt = "You are talking to JOI, an english coach, there's also Joe, another coach",
+            Prompt = "You are talking to TAI",
         };
         // Debug.Log("Processing audio...");
         timeSinceStartedProcessing = Time.time;

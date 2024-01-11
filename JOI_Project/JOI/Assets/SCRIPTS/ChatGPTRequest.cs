@@ -24,8 +24,6 @@ public class ChatGPTRequest : MonoBehaviour
 
     private Queue<string> history = new Queue<string>();
     private List<ChatMessage> messages = new List<ChatMessage>();
-
-        // Obtener la API key de la variable de entorno
     private const string CHANGE_CHAR_CMD = "CHANGE_CHARACTER_COMMAND";
     private const string CHANGE_SCENARIO_CMD = "CHANGE_SCENARIO_COMMAND";
 
@@ -69,7 +67,7 @@ public class ChatGPTRequest : MonoBehaviour
         string newRes = response;
 
         // Cambiamos el personaje
-        string nextCoachName = _currentCoachName == "Joi" ? "Joe" : "Joi";
+        string nextCoachName = _currentCoachName == "Tai" ? "Tae" : "Tai";
         Salsa_RTVoice nextVoice = _currentVoice == _womanVoice ? _manVoice : _womanVoice;
 
         int nextCoachSpeechIndex = newRes.IndexOf(nextCoachName + ":");
@@ -98,7 +96,7 @@ public class ChatGPTRequest : MonoBehaviour
     {
         SpeechToText.Instance.isProcessingData = true;
 
-        _currentCoachName = _currentCoachName == "Joi" ? "Joe" : "Joi";
+        _currentCoachName = _currentCoachName == "Tai" ? "Tae" : "Tai";
 
         _currentVoice.transform.parent.gameObject.SetActive(false);
         _currentVoice.speakText = "";
