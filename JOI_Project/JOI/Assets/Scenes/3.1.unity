@@ -15571,7 +15571,7 @@ MonoBehaviour:
   randomHoldDurationMax: 0.5
   configReady: 1
   warnOnNullRefs: 1
-  inspSalsaLinked: 0
+  inspSalsaLinked: 1
   inspStateFoldoutProcessing: 0
   inspStateFoldoutSettings: 0
   inspStateFoldoutEmotes: 0
@@ -15694,8 +15694,8 @@ MonoBehaviour:
   analysisValue: 0
   sampleSize: 512
   audioUpdateDelay: 0.10925
-  playheadBias: 2800
-  autoAdjustAnalysis: 1
+  playheadBias: 4200
+  autoAdjustAnalysis: 0
   autoAdjustMicrophone: 0
   microphoneRecordHeadPointer: 0
   scaleExternalAnalysis: 0
@@ -19565,7 +19565,7 @@ MonoBehaviour:
   useAudioAnalysis: 1
   needAudioSource: 1
   inspStateFoldoutProcessing: 0
-  inspStateFoldoutSettings: 0
+  inspStateFoldoutSettings: 1
   inspStateFoldoutVisemes: 0
   inspCollectionDisplayMode: 1
   inspAnalysisDisplay: 0
